@@ -7,7 +7,7 @@ User = get_user_model()
 class Item(models.Model):
     CURRENCY_CHOICES = [
         ('USD', 'usd'),
-        ('RUB', 'rub')
+        ('EUR', 'eur')
     ]
     name = models.CharField(
         verbose_name='Название продукта',
@@ -29,7 +29,7 @@ class Item(models.Model):
         return '{0:.2f}'.format(self.price / 100)
 
     def __str__(self):
-        return f'{self.name}, {self.get_price_show}, {self.currency}'
+        return f'{self.name}, {self.get_price_show()}, {self.currency}'
 
     class Meta:
         verbose_name = 'Товар'

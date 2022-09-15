@@ -60,8 +60,8 @@ class BuyView(RetrieveAPIView):
             ],
             payment_method_types=['card'],
             mode='payment',
-            success_url='http://127.0.0.1:8000/success/',
-            cancel_url='http://127.0.0.1:8000/cancel/'
+            success_url='http://localhost/success/',
+            cancel_url='http://localhost/cancel/'
         )
         return Response(data={'sessionId': checkout_session['id'], })
 
@@ -79,7 +79,7 @@ class PayForOrderVew(RetrieveAPIView):
                         'currency': item.item.currency,
                         'product_data': {
                             'name': item.item.name
-                        }                  
+                        }
                     },
                     'quantity': item.amount,
                 }
@@ -87,8 +87,8 @@ class PayForOrderVew(RetrieveAPIView):
             ],
             payment_method_types=['card'],
             mode='payment',
-            success_url='http://127.0.0.1:8000/success/',
-            cancel_url='http://127.0.0.1:8000/cancel/'
+            success_url='http://localhost/success/',
+            cancel_url='http://localhost/cancel/'
         )
         return Response(data={'sessionId': checkout_session['id'], })
 

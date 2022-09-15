@@ -36,7 +36,7 @@ class ItemInOrderInline(admin.StackedInline):
     model = ItemInOrder
     extra = 1
     formset = ItemInOrderFormSet
-    fields = ('item', 'currency')
+    fields = ('item', 'amount')
 
 
 class OrderAdmin(admin.ModelAdmin):

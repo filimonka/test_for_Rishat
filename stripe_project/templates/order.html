@@ -17,7 +17,7 @@
               Количество: {{ item.amount }}
             </li>
             <li>
-              Цена: {{ item.item.get_price_show }}
+              Цена: {{ item.item.get_price_show }}, {{ item.item.currency }}
             </li>
           </ul>
             {% if not forloop.last %}<hr>{% endif %}

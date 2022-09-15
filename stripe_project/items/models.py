@@ -29,7 +29,7 @@ class Item(models.Model):
         return '{0:.2f}'.format(self.price / 100)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}, {self.get_price_show}, {self.currency}'
 
     class Meta:
         verbose_name = 'Товар'

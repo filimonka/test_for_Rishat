@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.dateformat import format
 
 User = get_user_model()
 
@@ -53,6 +55,8 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
+    def __str__(self):
+        return f'Заказ №{self.id}'
 
 class ItemInOrder(models.Model):
     order = models.ForeignKey(
@@ -72,3 +76,51 @@ class ItemInOrder(models.Model):
 
     def __str__(self):
         return f'{self.item.name} в заказе {self.order.id}'
+
+
+class Discount(models.Model):
+    name = models.CharField(
+        verbose_name='Название',
+        max_length=100
+    )
+    percentage = models.FloatField(
+        verbose_name='размер скидки',
+        validators=[
+            MinValueValidator(0.01),
+            MaxValueValidator(100)
+        ]
+        )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='discount'
+    )
+    redeem_by = models.DateField(
+        verbose_name='срок действия',
+        blank=True,
+        null=True,
+    )
+
+    def get_redeem(self):
+        return format(self.redeem_by, 'U')
+    
+    def __str__(self):
+        return f'{self.name}, {self.percentage}'
+
+
+class Tax(models.Model):
+    name = models.CharField(
+        verbose_name='название налога',
+        max_length=150,
+    )
+    inclusive = models.BooleanField(
+        verbose_name='размер налога включен в стоимость',
+        default=False
+    )
+    percentage = models.FloatField(
+        verbose_name='размер налога',
+        validators=[
+            MinValueValidator(0.01),
+            MaxValueValidator(100)
+        ]
+    )
